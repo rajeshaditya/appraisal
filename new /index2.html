@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Aditya</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type="text/css" src="css/bootstrap.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+    <script src="scripts/angscript.js"></script> 
+     <script src="scripts/script.js"></script> 
+    <title>Dynamically Add-Remove Rows from Table</title>
+
+
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+    <link src="e_t.css" type="text/css">
+</head>
+    
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+
+.table {
+  width: 100%;
+}
+.table thead th {
+  padding: 10px 10px;
+  background: #00adee;
+  font-size: 15px;
+  text-transform: uppercase;
+  vertical-align: top;
+  color: #1D4A5A;
+  font-weight: normal;
+  text-align: left;
+}
+.table tbody tr td {
+  padding: 10px;
+  background: #f2f2f2;
+  font-size: 14px;
+}
+
+.add, .edit, .save, .delete {
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.edit, .save, .delete {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.add {
+  float: right;
+  background: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 0;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+.add:hover {
+  background: #ffffff;
+  color: #00adee;
+}
+
+.save {
+  display: none;
+  background: #32AD60;
+  color: #ffffff;
+}
+.save:hover {
+  background: #27854a;
+}
+
+.edit {
+  background: #2199e8;
+  color: #ffffff;
+}
+.edit:hover {
+  background: #147dc2;
+}
+
+.delete {
+  background: #EC5840;
+  color: #ffffff;
+}
+.delete:hover {
+  background: #e23317;
+}
+  
+</style>
+    
+<body ng-app="myapp" ng-controller="ListController">
+<form ng-submit="addNew()">
+<h3>4. Subjects Average Pass Percentage : </h3>
+    <table class="table data table-bordered">
+      <thead>
+        <tr>
+         
+          <th>Subject Name</th>
+          <th>Year-Sem-Branch-Sec</th>
+          <th>No.of.Students Appeared (A)</th>
+          <th>Passed (B)</th>
+          <th>Pass Percentage (B/A*100)</th>
+         
+          <th><input type="submit" class="btn btn-primary addnew pull-right" value="Add New"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="personalDetail in personalDetails">
+         
+          <td class="data">
+            <input type="text"  ng-model="personalDetail.subjectName" required />
+          </td>
+          <td class="data">
+            <input type="text"  ng-model="personalDetail.yearSem" required />
+          </td>
+          <td class="data">
+            <input type="text" ng-keyup="calculatePercentage(personalDetail)"  ng-model="personalDetail.studentsAppeared" required />
+          </td>
+          <td class="data">
+            <input type="text" ng-keyup="calculatePercentage(personalDetail)"  ng-model="personalDetail.studentsPassed" required />
+          </td>
+          <td class="data">
+            <input type="text" ng-model="personalDetail.percentage" disabled="disabled">
+          </td>
+          
+          <td>
+            
+           <input  type="button" class="btn btn-danger pull-right" ng-click="removeRow($index)" value="Remove">
+          </td>
+        </tr>
+       
+      </tbody> 
+    </table>
+    <table>
+      <tr>
+      <td>Average : </td>
+      <td> <input type="text" value="{{personalDetails[0].average}}" disabled="disabled">
+</td>
+      </tr>
+
+    </table>
+    </form>
+    <h3>Faculty text box (optional):</h3>
+    <div class="form-group">
+      <textarea class="form-control" rows="5" id="comment"></textarea>
+        <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+    </div>
+    {{personalDetails}}
+    <br><br>
+    </body>
+    </html>
