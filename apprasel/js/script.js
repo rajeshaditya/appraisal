@@ -1,5 +1,5 @@
 var app = angular.module("myapp", [])
-app.controller("ListController2", ['$scope', function($scope) {
+app.controller("ListController2", ['$scope','getAverage', function($scope, getAverage)  {
   $scope.subjectAverages = [{
     'subjectName': '',
     'yearSem': '',
@@ -9,9 +9,8 @@ app.controller("ListController2", ['$scope', function($scope) {
      'average':'',
      'facultyComment':''
   }];
-
-
-  $scope.calculatePercentage = function(val) {
+ 
+ $scope.calculatePercentage = function(val) {
     val.percentage = (parseFloat(val.studentsPassed)*100)/parseFloat(val.studentsAppeared);
     $scope.calAverage();
   };
@@ -49,9 +48,27 @@ app.controller("ListController2", ['$scope', function($scope) {
     })
     $scope.subjectAverages[0].average = (total/$scope.subjectAverages.length).toFixed(2);
   }
+
+  $scope.save=function(){
+    //alert($scope.subjectAverages[0].average);
+    getAverage.subAverage($scope.subjectAverages[0].average);
+    //alert(subjectAverages[0].average);
+  };
+  // $scope.sendAverage=function(abc){
+  //   getAverage.subAverage(abc[0].average);
+  // };
+
 }]);
 
-app.controller("ListController3", ['$scope', function($scope) {
+
+
+
+//***************************************LIST CONTROLLER 3***********************************************************
+
+
+
+
+app.controller("ListController3", ['$scope','getAverage', function($scope,getAverage) {
   $scope.proctoringAverages = [{
     'studentAlloted': '',
     'yearSem': '',
@@ -70,7 +87,7 @@ app.controller("ListController3", ['$scope', function($scope) {
 
   $scope.addNew = function(proctoringAverage) {
     $scope.proctoringAverages.push({
-      'studentAlloted': "",
+    'studentAlloted': "",
     'yearSem': "",
     'studentsAppeared': "",
      'studentsPassed':"",
@@ -101,14 +118,26 @@ app.controller("ListController3", ['$scope', function($scope) {
     })
     $scope.proctoringAverages[0].average = (total/$scope.proctoringAverages.length).toFixed(2);
   }
+
+
+    $scope.save=function(){
+    //alert($scope.subjectAverages[0].average);
+    getAverage.proctoringAverage($scope.proctoringAverages[0].average);
+    //alert(subjectAverages[0].average);
+  };
+
 }]);
 
 
-app.controller("ListController4", ['$scope', function($scope) {
+
+
+//*********************************************LISTCONTROLLER 4*********************************
+
+app.controller("ListController4", ['$scope', 'getAverage',function($scope,getAverage) {
   $scope.studentFeedbacks = [{
     'subjectName': '',
     'yearSem': '',
-    'studentsAppeared': '',
+      'studentsAppeared': '',
      'studentsPassed':'',
      'percentage':'',
      'average':'',
@@ -154,14 +183,30 @@ app.controller("ListController4", ['$scope', function($scope) {
     })
     $scope.studentFeedbacks[0].average = (total/$scope.studentFeedbacks.length).toFixed(2);
   }
+
+
+      $scope.save=function(){
+    //alert($scope.subjectAverages[0].average);
+    getAverage.studentFeedback($scope.studentFeedbacks[0].average);
+    //alert(subjectAverages[0].average);
+  };
 }]);
+
+
+
+//***********************************************LIST CONTROLLER 5******************************************************
+
+
+
+
 
 app.controller("ListController5", ['$scope', function($scope) {
   $scope.researchPublications = [{
     'researchPaper': "Scopus/SCI",
     'no_Paper': '',
     'maxMark': 20,
-    'obtainedMarks':''
+    'obtainedMarks':'',
+    'facultyComment':''
      
   },
   {
@@ -197,12 +242,18 @@ app.controller("ListController5", ['$scope', function($scope) {
 
 
 
+//***************************************LISTCONTROLLER 6***************************************
+
+
+
+
 app.controller("ListController6", ['$scope', function($scope) {
   $scope.scopusDetails = [{
     'JournalDetail': '',
     'JournalNumber': '',
     'reviewDetail': '',
-     'author':''
+     'author':'',
+     'facultyComment':''
      
   }];
 
@@ -237,12 +288,18 @@ app.controller("ListController6", ['$scope', function($scope) {
 
 
 
+//***************************************LISTCONTROLLER 7****************************************************
+
+
+
+
 app.controller("ListController7", ['$scope', function($scope) {
   $scope.nationalJournals = [{
     'JournalDetail': '',
     'JournalNumber': '',
     'reviewDetail': '',
-     'author':''
+     'author':'',
+     'facultyComment':''
      
   }];
 
@@ -276,12 +333,17 @@ app.controller("ListController7", ['$scope', function($scope) {
 }]);
 
 
+
+//*****************************************LISTCONTROLLER 8*******************************************
+
+
 app.controller("ListController8", ['$scope', function($scope) {
   $scope.reputedConferences = [{
     'title': '',
     'type': '',
     'detail': '',
-     'author':''
+     'author':'',
+     'facultyComment':''
      
   }];
 
@@ -313,3 +375,231 @@ app.controller("ListController8", ['$scope', function($scope) {
 
   
 }]);
+
+
+//******************************************LISTCONTROLLER 9*********************************************
+
+
+
+
+app.controller("ListController9", ['$scope', function($scope) {
+  $scope.journalConferences = [{
+    'title': '',
+    'type': '',
+    'detail': '',
+     'author':'',
+     'facultyComment':''
+     
+  }];
+
+
+ 
+
+  $scope.addNew = function(journalConference) {
+    $scope.journalConferences.push({
+      'title': "",
+    'type': "",
+    'detail': "",
+     'author':""
+     
+     
+    });
+  };
+  
+  $scope.removeRow=function(index){       
+       // remove the row specified in index
+    $scope.journalConferences.splice( index, 1);
+    
+    // if no rows left in the array create a blank array
+    if ($scope.journalConferences.length() === 0){
+      $scope.journalConferences = [];
+      
+    }
+    
+  };
+
+  
+}]);
+
+
+
+//**********************************************LISTCONTROLLER 10*********************************************
+
+
+app.controller("ListController10", ['$scope', function($scope) {
+  $scope.chapterBooks = [{
+    'title': '',
+    'publisher': '',
+    'issnNumber': '',
+     'author':'',
+     'facultyComment':''
+     
+  }];
+
+
+ 
+
+  $scope.addNew = function(chapterBook) {
+    $scope.chapterBooks.push({
+      'title': "",
+    'publisher': "",
+    'issnNumber': "",
+     'author':""
+     
+     
+    });
+  };
+  
+  $scope.removeRow=function(index){       
+       // remove the row specified in index
+    $scope.chapterBooks.splice( index, 1);
+    
+    // if no rows left in the array create a blank array
+    if ($scope.chapterBook.length() === 0){
+      $scope.chapterBooks = [];
+      
+    }
+    
+  };
+
+  
+}]);
+
+
+//*****************************************LISTCONTROLLER 11***************************************************
+
+
+app.controller("ListController11", ['$scope', function($scope) {
+  $scope.workshops = [{
+    'program': '',
+    'duration': '',
+    'datePlace': '',
+     'organization':'',
+     'facultyComment':''
+     
+  }];
+
+
+ 
+
+  $scope.addNew = function(workshop) {
+    $scope.workshops.push({
+      'program': "",
+    'duration': "",
+    'datePlace': "",
+     'organization':""
+     
+     
+    });
+  };
+  
+  $scope.removeRow=function(index){       
+       // remove the row specified in index
+    $scope.workshops.splice( index, 1);
+    
+    // if no rows left in the array create a blank array
+    if ($scope.workshops.length() === 0){
+      $scope.workshops= [];
+      
+    }
+    
+  };
+
+  
+}]);
+
+
+
+//****************************************************LISTCONTRILLER 12*********************************
+
+
+app.controller("ListController12", ['$scope', 'getAverage',function($scope,getAverage) {
+  $scope.import_data=function(){
+ $scope.subAverage= getAverage.getsubAverage(); 
+ $scope.proctoringAverage=getAverage.getproctoringAverage();
+ $scope.studentFeedback=getAverage.getstudentFeedback();
+}
+}]);
+
+
+
+//*****************************************LISTCONTROLLER13*******************************************
+
+
+
+app.controller("ListController13", ['$scope', function($scope) {
+  $scope.additions = [{
+    'responsibility': '',
+    'assignedBy': '',
+    'duration': '',
+    'facultyComment':''
+     
+  }];
+
+
+ 
+
+  $scope.addNew = function(addition) {
+    $scope.additions.push({
+      'responsibility': "",
+    'assignedBy': "",
+    'duration': ""
+     
+     
+    });
+  };
+  
+  $scope.removeRow=function(index){       
+       // remove the row specified in index
+    $scope.additions.splice( index, 1);
+    
+    // if no rows left in the array create a blank array
+    if ($scope.additions.length() === 0){
+      $scope.additions= [];
+      
+    }
+    
+  };
+
+  
+}]);
+
+
+
+//***************************************SERVICE********************************************************
+
+
+
+
+app.service('getAverage', function() {
+  var subAverages = [];
+  var proctoringAverages=[];
+  var studentFeedbacks=[];
+  return{
+   subAverage:function (sub) {
+        subAverages.push(sub);
+        //alert(subAverages);
+    },
+    getsubAverage:function(){
+      return subAverages;
+    },
+
+    proctoringAverage:function(pro){
+        proctoringAverages.push(pro);
+        //alert(proctoringAverages);
+    },
+     getproctoringAverage:function(){
+      return proctoringAverages;
+    },
+    studentFeedback:function(feedback){
+      studentFeedbacks.push(feedback);
+      //alert(studentFeedbacks);
+    },
+     getstudentFeedback:function(){
+      return studentFeedbacks;
+    }
+
+  };
+});
+
+
