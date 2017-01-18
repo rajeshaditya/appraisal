@@ -572,31 +572,31 @@ app.controller("ListController13", ['$scope', function($scope) {
 
 
 app.service('getAverage', function() {
-  var subAverages = [];
-  var proctoringAverages=[];
-  var studentFeedbacks=[];
+  var subAverages=0;
+  var proctoringAverages=0;
+  var studentFeedbacks=0;
   return{
    subAverage:function (sub) {
-        subAverages.push(sub);
-        //alert(subAverages);
+      this.subAverages=sub;
+      
     },
     getsubAverage:function(){
-      return subAverages;
+      return this.subAverages;
     },
 
     proctoringAverage:function(pro){
-        proctoringAverages.push(pro);
+        this.proctoringAverages=pro;
         //alert(proctoringAverages);
     },
      getproctoringAverage:function(){
-      return proctoringAverages;
+      return this.proctoringAverages;
     },
     studentFeedback:function(feedback){
-      studentFeedbacks.push(feedback);
+      this.studentFeedbacks=feedback;
       //alert(studentFeedbacks);
     },
      getstudentFeedback:function(){
-      return studentFeedbacks;
+      return this.studentFeedbacks;
     }
 
   };

@@ -828,9 +828,11 @@
                         {{workshops}}
 				</div>
 			</li>
+
 			<li>
-				<a href="#accordion14" class="accordion-trigger" data-accord-group="group1"><p style="color:white;">12. Staff Appraisal - Points Earned :</p></a>
-				<div id="accordion14" class="accordion-content collapsed" ng-controller="ListController12">
+      <div ng-controller="ListController12">
+				<a href="#accordion14" class="accordion-trigger" data-accord-group="group1" ng-click="import_data()"><p style="color:white;">12. Staff Appraisal - Points Earned :</p></a>
+				<div id="accordion14" class="accordion-content collapsed" >
 					<form ng-submit="addNew()">
                         <table class="table data table-bordered">
                           <thead>
@@ -864,7 +866,7 @@
                             </tr>
                           </tbody> 
                         </table>
-                        <button type="submit" class="btn btn-default" ng-click="import_data()">Import_Data</button>
+                        
                         <table>
                           <tr>
                           <td>Total (out of 80) : </td>
@@ -881,6 +883,7 @@
                         </div>
                         <!--{{personalDetails}}-->
 				</div>
+        <div ng-controller="ListController12">
 			</li>
 			<li>
 				<a href="#accordion15" class="accordion-trigger" data-accord-group="group1"><p style="color:white;">13. Additional Responsibilites in the Department/College :</p></a>
