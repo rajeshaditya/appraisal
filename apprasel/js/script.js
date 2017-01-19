@@ -1,5 +1,5 @@
 var app = angular.module("myapp", [])
-app.controller("ListController2", ['$scope','getAverage', function($scope, getAverage)  {
+app.controller("ListController2", ['$scope','getAverage', '$http',function($scope, getAverage,$http)  {
   $scope.subjectAverages = [{
     'subjectName': '',
     'yearSem': '',
@@ -50,13 +50,25 @@ app.controller("ListController2", ['$scope','getAverage', function($scope, getAv
   }
 
   $scope.save=function(){
-    //alert($scope.subjectAverages[0].average);
-    getAverage.subAverage($scope.subjectAverages[0].average);
-    //alert(subjectAverages[0].average);
-  };
-  // $scope.sendAverage=function(abc){
-  //   getAverage.subAverage(abc[0].average);
-  // };
+
+     
+ var data = {object : $scope.subjectAverages};
+ getAverage.subAverage($scope.subjectAverages[0].average);
+ $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.subjectAverages,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+  
+}  
 
 }]);
 
