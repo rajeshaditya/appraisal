@@ -1,5 +1,10 @@
-var app = angular.module("myapp", [])
-app.controller("ListController2", ['$scope','getAverage', '$http',function($scope, getAverage,$http)  {
+var app = angular.module("myapp", []);
+app.controller("ListController1", ['$scope','$rootScope',function($scope,$rootScope)  {
+
+$rootScope.progressBar=0;
+
+  }]);
+app.controller("ListController2", ['$scope','getAverage', '$rootScope','$http',function($scope,getAverage,$rootScope,$http)  {
   $scope.subjectAverages = [{
     'subjectName': '',
     'yearSem': '',
@@ -52,8 +57,9 @@ app.controller("ListController2", ['$scope','getAverage', '$http',function($scop
   $scope.save=function(){
 
      
- var data = {object : $scope.subjectAverages};
+ $rootScope.progressBar=($rootScope.progressBar+10);
  getAverage.subAverage($scope.subjectAverages[0].average);
+
  $http({
     url: '/apprasel',
     method: "POST",
@@ -80,7 +86,7 @@ app.controller("ListController2", ['$scope','getAverage', '$http',function($scop
 
 
 
-app.controller("ListController3", ['$scope','getAverage', function($scope,getAverage) {
+app.controller("ListController3", ['$scope','getAverage','$rootScope','$http', function($scope,getAverage,$rootScope,$http) {
   $scope.proctoringAverages = [{
     'studentAlloted': '',
     'yearSem': '',
@@ -133,9 +139,23 @@ app.controller("ListController3", ['$scope','getAverage', function($scope,getAve
 
 
     $scope.save=function(){
+      $rootScope.progressBar=($rootScope.progressBar+10);
     //alert($scope.subjectAverages[0].average);
     getAverage.proctoringAverage($scope.proctoringAverages[0].average);
     //alert(subjectAverages[0].average);
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.proctoringAverages,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
   };
 
 }]);
@@ -145,7 +165,7 @@ app.controller("ListController3", ['$scope','getAverage', function($scope,getAve
 
 //*********************************************LISTCONTROLLER 4*********************************
 
-app.controller("ListController4", ['$scope', 'getAverage',function($scope,getAverage) {
+app.controller("ListController4", ['$scope', 'getAverage','$rootScope','$http',function($scope,getAverage,$rootScope,$http) {
   $scope.studentFeedbacks = [{
     'subjectName': '',
     'yearSem': '',
@@ -201,6 +221,20 @@ app.controller("ListController4", ['$scope', 'getAverage',function($scope,getAve
     //alert($scope.subjectAverages[0].average);
     getAverage.studentFeedback($scope.studentFeedbacks[0].average);
     //alert(subjectAverages[0].average);
+    $rootScope.progressBar=($rootScope.progressBar+10);
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.studentFeedbacks,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
   };
 }]);
 
@@ -212,7 +246,7 @@ app.controller("ListController4", ['$scope', 'getAverage',function($scope,getAve
 
 
 
-app.controller("ListController5", ['$scope', function($scope) {
+app.controller("ListController5", ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
   $scope.researchPublications = [{
     'researchPaper': "Scopus/SCI",
     'no_Paper': '',
@@ -250,6 +284,24 @@ app.controller("ListController5", ['$scope', function($scope) {
   }
 
   ];
+
+$scope.save=function(){
+   
+    $rootScope.progressBar=($rootScope.progressBar+10);
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.researchPublications,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+  };  
   }]);
 
 
@@ -259,7 +311,7 @@ app.controller("ListController5", ['$scope', function($scope) {
 
 
 
-app.controller("ListController6", ['$scope', function($scope) {
+app.controller("ListController6", ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
   $scope.scopusDetails = [{
     'JournalDetail': '',
     'JournalNumber': '',
@@ -295,6 +347,24 @@ app.controller("ListController6", ['$scope', function($scope) {
     
   };
 
+  $scope.save=function(){
+   
+    $rootScope.progressBar=($rootScope.progressBar+10);
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.scopusDetails,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+  };
+
   
 }]);
 
@@ -305,7 +375,7 @@ app.controller("ListController6", ['$scope', function($scope) {
 
 
 
-app.controller("ListController7", ['$scope', function($scope) {
+app.controller("ListController7", ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
   $scope.nationalJournals = [{
     'JournalDetail': '',
     'JournalNumber': '',
@@ -340,6 +410,23 @@ app.controller("ListController7", ['$scope', function($scope) {
     }
     
   };
+  $scope.save=function(){
+   
+    $rootScope.progressBar=($rootScope.progressBar+10);
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.nationalJournals,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+  };
 
   
 }]);
@@ -349,7 +436,7 @@ app.controller("ListController7", ['$scope', function($scope) {
 //*****************************************LISTCONTROLLER 8*******************************************
 
 
-app.controller("ListController8", ['$scope', function($scope) {
+app.controller("ListController8", ['$scope', '$rootScope','$http', function($scope,$rootScope,$http) {
   $scope.reputedConferences = [{
     'title': '',
     'type': '',
@@ -384,6 +471,23 @@ app.controller("ListController8", ['$scope', function($scope) {
     }
     
   };
+  $scope.save=function(){
+   
+    $rootScope.progressBar=($rootScope.progressBar+10);
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.reputedConferences,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+  };
 
   
 }]);
@@ -394,7 +498,7 @@ app.controller("ListController8", ['$scope', function($scope) {
 
 
 
-app.controller("ListController9", ['$scope', function($scope) {
+app.controller("ListController9", ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
   $scope.journalConferences = [{
     'title': '',
     'type': '',
@@ -429,6 +533,23 @@ app.controller("ListController9", ['$scope', function($scope) {
     }
     
   };
+  $scope.save=function(){
+   
+    $rootScope.progressBar=($rootScope.progressBar+10);
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.journalConferences,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+  };
 
   
 }]);
@@ -438,7 +559,7 @@ app.controller("ListController9", ['$scope', function($scope) {
 //**********************************************LISTCONTROLLER 10*********************************************
 
 
-app.controller("ListController10", ['$scope', function($scope) {
+app.controller("ListController10", ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
   $scope.chapterBooks = [{
     'title': '',
     'publisher': '',
@@ -473,6 +594,23 @@ app.controller("ListController10", ['$scope', function($scope) {
     }
     
   };
+    $scope.save=function(){
+   $rootScope.progressBar=($rootScope.progressBar+10);
+    
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.chapterBooks,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+  };
 
   
 }]);
@@ -481,7 +619,7 @@ app.controller("ListController10", ['$scope', function($scope) {
 //*****************************************LISTCONTROLLER 11***************************************************
 
 
-app.controller("ListController11", ['$scope', function($scope) {
+app.controller("ListController11", ['$scope', '$rootScope','$http',function($scope,$rootScope,$http) {
   $scope.workshops = [{
     'program': '',
     'duration': '',
@@ -516,6 +654,23 @@ app.controller("ListController11", ['$scope', function($scope) {
     }
     
   };
+    $scope.save=function(){
+   
+    $rootScope.progressBar=($rootScope.progressBar+10);
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.workshops,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+  };
 
   
 }]);
@@ -525,12 +680,40 @@ app.controller("ListController11", ['$scope', function($scope) {
 //****************************************************LISTCONTRILLER 12*********************************
 
 
-app.controller("ListController12", ['$scope', 'getAverage',function($scope,getAverage) {
+app.controller("ListController12", ['$scope', 'getAverage','$rootScope','$http',function($scope,getAverage,$rootScope,$http) {
   $scope.import_data=function(){
+
  $scope.subAverage= getAverage.getsubAverage(); 
- $scope.proctoringAverage=getAverage.getproctoringAverage();
+ $scope.proctoringAverages=getAverage.getproctoringAverage();
  $scope.studentFeedback=getAverage.getstudentFeedback();
+ $scope.facultyComment='';
 }
+  $scope.save=function(){
+   $rootScope.progressBar=($rootScope.progressBar+10);
+  $scope.allAverage=[{
+  'subAverage':$scope.subAvg,
+  'proctoringAverages':$scope.proctoringAvg,
+  'studentFeedback':$scope.studentFeed,
+  'facultyComment':$scope.facultyComment
+
+ }];
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.allAverage,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+  };
+
+
+
 }]);
 
 
@@ -539,7 +722,7 @@ app.controller("ListController12", ['$scope', 'getAverage',function($scope,getAv
 
 
 
-app.controller("ListController13", ['$scope', function($scope) {
+app.controller("ListController13", ['$scope','$rootScope','$http', function($scope,$rootScope,$http) {
   $scope.additions = [{
     'responsibility': '',
     'assignedBy': '',
@@ -572,7 +755,23 @@ app.controller("ListController13", ['$scope', function($scope) {
     }
     
   };
-
+  $scope.save=function(){
+   
+    $rootScope.progressBar=($rootScope.progressBar+10);
+     $http({
+    url: '/apprasel',
+    method: "POST",
+    data: $scope.additions,
+    headers: {
+             'Content-Type': 'application/json'
+    }
+}).then(function(data){ //.success is deprecated,so use .then
+    alert("done");
+})
+  .catch(function(err){//using .catch instead of .error as it is deprecated
+    console.log("Error in request =>", err)
+});
+  };
   
 }]);
 
