@@ -2,6 +2,7 @@ var app = angular.module("myapp", []);
 app.controller("ListController1", ['$scope','$rootScope',function($scope,$rootScope)  {
 
 $rootScope.progressBar=0;
+$rootScope.progressBarValue=0;
 
   }]);
 app.controller("ListController2", ['$scope','getAverage', '$rootScope','$http',function($scope,getAverage,$rootScope,$http)  {
@@ -12,7 +13,8 @@ app.controller("ListController2", ['$scope','getAverage', '$rootScope','$http',f
      'studentsPassed':'',
      'percentage':'',
      'average':'',
-     'facultyComment':''
+     'facultyComment':'',
+     'point':''
   }];
  
  $scope.calculatePercentage = function(val) {
@@ -50,14 +52,26 @@ app.controller("ListController2", ['$scope','getAverage', '$rootScope','$http',f
     var total =0;
     angular.forEach($scope.subjectAverages,function(item){
       total += item.percentage;
-    })
+    });
     $scope.subjectAverages[0].average = (total/$scope.subjectAverages.length).toFixed(2);
-  }
+
+    if($scope.subjectAverages[0].average>=90)
+      $scope.subjectAverages[0].point=20;
+    else if(($scope.subjectAverages[0].average>=80)&&($scope.subjectAverages[0].average<90))
+      $scope.subjectAverages[0].point=15;
+    else if(($scope.subjectAverages[0].average>=70)&&($scope.subjectAverages[0].average<80))
+      $scope.subjectAverages[0].point=10;
+    else if(($scope.subjectAverages[0].average>=60)&&($scope.subjectAverages[0].average<70))
+      $scope.subjectAverages[0].point=5;
+    else
+      $scope.subjectAverages[0].point=0;
+}
 
   $scope.save=function(){
 
      
- $rootScope.progressBar=($rootScope.progressBar+10);
+ $rootScope.progressBarValue=($rootScope.progressBarValue+$scope.subjectAverages[0].point);
+ $rootScope.progressBar=(10/8)*$rootScope.progressBarValue;
  getAverage.subAverage($scope.subjectAverages[0].average);
 
  $http({
@@ -94,7 +108,8 @@ app.controller("ListController3", ['$scope','getAverage','$rootScope','$http', f
      'studentsPassed':'',
      'percentage':'',
      'average':'',
-     'facultyComment':''
+     'facultyComment':'',
+     'point':''
   }];
 
 
@@ -135,11 +150,23 @@ app.controller("ListController3", ['$scope','getAverage','$rootScope','$http', f
       total += item.percentage;
     })
     $scope.proctoringAverages[0].average = (total/$scope.proctoringAverages.length).toFixed(2);
+    if($scope.proctoringAverages[0].average>=90)
+      $scope.proctoringAverages[0].point=20;
+    else if(($scope.proctoringAverages[0].average>=80)&&($scope.proctoringAverages[0].average<90))
+      $scope.proctoringAverages[0].point=15;
+    else if(($scope.proctoringAverages[0].average>=70)&&($scope.proctoringAverages[0].average<80))
+      $scope.proctoringAverages[0].point=10;
+    else if(($scope.proctoringAverages[0].average>=60)&&($scope.proctoringAverages[0].average<70))
+      $scope.proctoringAverages[0].point=5;
+    else
+      $scope.proctoringAverages[0].point=0;
+
   }
 
 
     $scope.save=function(){
-      $rootScope.progressBar=($rootScope.progressBar+10);
+      $rootScope.progressBarValue=($rootScope.progressBarValue+$scope.proctoringAverages[0].point);
+      $rootScope.progressBar=(10/8)*$rootScope.progressBarValue;
     //alert($scope.subjectAverages[0].average);
     getAverage.proctoringAverage($scope.proctoringAverages[0].average);
     //alert(subjectAverages[0].average);
@@ -173,7 +200,8 @@ app.controller("ListController4", ['$scope', 'getAverage','$rootScope','$http',f
      'studentsPassed':'',
      'percentage':'',
      'average':'',
-     'facultyComment':''
+     'facultyComment':'',
+     'point':''
   }];
 
 
@@ -212,16 +240,29 @@ app.controller("ListController4", ['$scope', 'getAverage','$rootScope','$http',f
     var total =0;
     angular.forEach($scope.studentFeedbacks,function(item){
       total += item.percentage;
-    })
+    });
     $scope.studentFeedbacks[0].average = (total/$scope.studentFeedbacks.length).toFixed(2);
+      if($scope.studentFeedbacks[0].average>=90)
+      $scope.studentFeedbacks[0].point=20;
+    else if(($scope.studentFeedbacks[0].average>=80)&&($scope.studentFeedbacks[0].average<90))
+      $scope.studentFeedbacks[0].point=15;
+    else if(($scope.studentFeedbacks[0].average>=70)&&($scope.studentFeedbacks[0].average<80))
+      $scope.studentFeedbacks[0].point=10;
+    else if(($scope.studentFeedbacks[0].average>=60)&&($scope.studentFeedbacks[0].average<70))
+      $scope.studentFeedbacks[0].point=5;
+    else
+      $scope.studentFeedbacks[0].point=0;
+
+  
   }
 
 
       $scope.save=function(){
     //alert($scope.subjectAverages[0].average);
-    getAverage.studentFeedback($scope.studentFeedbacks[0].average);
+    $rootScope.progressBarValue=($rootScope.progressBarValue+$scope.studentFeedbacks[0].point);
+ $rootScope.progressBar=(10/8)*$rootScope.progressBarValue;
     //alert(subjectAverages[0].average);
-    $rootScope.progressBar=($rootScope.progressBar+10);
+    $rootScope.progressBar=($rootScope.progressBar+$scope.studentFeedbacks[0].point);
      $http({
     url: '/apprasel',
     method: "POST",
@@ -287,7 +328,7 @@ app.controller("ListController5", ['$scope','$rootScope','$http', function($scop
 
 $scope.save=function(){
    
-    $rootScope.progressBar=($rootScope.progressBar+10);
+   
      $http({
     url: '/apprasel',
     method: "POST",
@@ -349,7 +390,7 @@ app.controller("ListController6", ['$scope','$rootScope','$http', function($scop
 
   $scope.save=function(){
    
-    $rootScope.progressBar=($rootScope.progressBar+10);
+    
      $http({
     url: '/apprasel',
     method: "POST",
@@ -412,7 +453,7 @@ app.controller("ListController7", ['$scope','$rootScope','$http', function($scop
   };
   $scope.save=function(){
    
-    $rootScope.progressBar=($rootScope.progressBar+10);
+    
      $http({
     url: '/apprasel',
     method: "POST",
@@ -473,7 +514,7 @@ app.controller("ListController8", ['$scope', '$rootScope','$http', function($sco
   };
   $scope.save=function(){
    
-    $rootScope.progressBar=($rootScope.progressBar+10);
+   
      $http({
     url: '/apprasel',
     method: "POST",
@@ -535,7 +576,7 @@ app.controller("ListController9", ['$scope','$rootScope','$http', function($scop
   };
   $scope.save=function(){
    
-    $rootScope.progressBar=($rootScope.progressBar+10);
+   
      $http({
     url: '/apprasel',
     method: "POST",
@@ -595,7 +636,7 @@ app.controller("ListController10", ['$scope','$rootScope','$http', function($sco
     
   };
     $scope.save=function(){
-   $rootScope.progressBar=($rootScope.progressBar+10);
+   
     
      $http({
     url: '/apprasel',
@@ -656,7 +697,7 @@ app.controller("ListController11", ['$scope', '$rootScope','$http',function($sco
   };
     $scope.save=function(){
    
-    $rootScope.progressBar=($rootScope.progressBar+10);
+   
      $http({
     url: '/apprasel',
     method: "POST",
@@ -689,7 +730,7 @@ app.controller("ListController12", ['$scope', 'getAverage','$rootScope','$http',
  $scope.facultyComment='';
 }
   $scope.save=function(){
-   $rootScope.progressBar=($rootScope.progressBar+10);
+   
   $scope.allAverage=[{
   'subAverage':$scope.subAvg,
   'proctoringAverages':$scope.proctoringAvg,
@@ -757,7 +798,7 @@ app.controller("ListController13", ['$scope','$rootScope','$http', function($sco
   };
   $scope.save=function(){
    
-    $rootScope.progressBar=($rootScope.progressBar+10);
+   
      $http({
     url: '/apprasel',
     method: "POST",
